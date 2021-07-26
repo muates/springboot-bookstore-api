@@ -1,6 +1,7 @@
 package com.muates.springbootbookstore.domain;
 
 import javax.persistence.*;
+import java.util.List;
 import java.util.Objects;
 
 @Entity
@@ -13,8 +14,11 @@ public class City {
 
     private String cityName;
 
-    @ManyToOne
+    @ManyToOne()
     private Country country;
+
+    @OneToMany
+    private List<Address> address;
 
     public City() {
     }

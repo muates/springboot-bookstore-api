@@ -2,6 +2,7 @@ package com.muates.springbootbookstore.domain;
 
 import javax.persistence.*;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Objects;
 import java.util.Set;
 
@@ -15,8 +16,11 @@ public class Country {
 
     private String countryName;
 
-    @OneToMany(mappedBy = "country", cascade = CascadeType.MERGE)
+    @OneToMany(mappedBy = "country", cascade = {CascadeType.MERGE, CascadeType.DETACH})
     private Set<City> cities;
+
+    @OneToMany
+    private List<Address> address;
 
     public Country() {
     }

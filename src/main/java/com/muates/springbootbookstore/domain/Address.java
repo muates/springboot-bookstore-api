@@ -13,10 +13,12 @@ public class Address {
     private int id;
 
     @NotBlank
-    private String country;
+    @ManyToOne(cascade = {CascadeType.MERGE, CascadeType.DETACH})
+    private Country country;
 
     @NotBlank
-    private String city;
+    @ManyToOne(cascade = {CascadeType.MERGE, CascadeType.DETACH})
+    private City city;
 
     @NotBlank
     private String street;
@@ -28,7 +30,7 @@ public class Address {
     public Address() {
     }
 
-    public Address(int id, String country, String city, String street, String postCode) {
+    public Address(int id, Country country, City city, String street, String postCode) {
         this.id = id;
         this.country = country;
         this.city = city;
@@ -44,19 +46,19 @@ public class Address {
         this.id = id;
     }
 
-    public String getCountry() {
+    public Country getCountry() {
         return country;
     }
 
-    public void setCountry(String country) {
+    public void setCountry(Country country) {
         this.country = country;
     }
 
-    public String getCity() {
+    public City getCity() {
         return city;
     }
 
-    public void setCity(String city) {
+    public void setCity(City city) {
         this.city = city;
     }
 
