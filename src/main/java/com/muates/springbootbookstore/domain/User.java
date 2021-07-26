@@ -43,6 +43,9 @@ public class User {
     @OneToOne(cascade = CascadeType.MERGE)
     private Gender gender;
 
+    @OneToOne(cascade = CascadeType.ALL)
+    private Address address;
+
     public User() {
     }
 
