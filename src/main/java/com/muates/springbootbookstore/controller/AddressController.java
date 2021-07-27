@@ -45,11 +45,11 @@ public class AddressController {
     }
 
     private Address convertToAddress(AddressRequest addressRequest) {
-        Address address = new Address();
-        address.setCountry(addressRequest.getCountry());
-        address.setCity(addressRequest.getCity());
-        address.setStreet(addressRequest.getStreet());
-        address.setPostCode(addressRequest.getPostCode());
-        return address;
+        return Address.builder()
+                .country(addressRequest.getCountry())
+                .city(addressRequest.getCity())
+                .street(addressRequest.getStreet())
+                .postCode(addressRequest.getPostCode())
+                .build();
     }
 }
