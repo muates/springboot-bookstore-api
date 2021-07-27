@@ -2,6 +2,7 @@ package com.muates.springbootbookstore.domain;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
 import java.util.Objects;
 
 @Entity
@@ -12,20 +13,15 @@ public class Address {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
 
-    @NotBlank
     @ManyToOne(cascade = {CascadeType.MERGE, CascadeType.DETACH})
     private Country country;
 
-    @NotBlank
     @ManyToOne(cascade = {CascadeType.MERGE, CascadeType.DETACH})
     private City city;
 
-    @NotBlank
     private String street;
 
-    @NotBlank
     private String postCode;
-
 
     public Address() {
     }

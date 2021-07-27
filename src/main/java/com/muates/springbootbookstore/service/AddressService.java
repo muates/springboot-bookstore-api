@@ -1,6 +1,8 @@
 package com.muates.springbootbookstore.service;
 
 import com.muates.springbootbookstore.domain.Address;
+import com.muates.springbootbookstore.domain.City;
+import com.muates.springbootbookstore.domain.Country;
 import com.muates.springbootbookstore.repository.AddressRepository;
 import org.springframework.stereotype.Service;
 
@@ -13,9 +15,13 @@ import java.util.NoSuchElementException;
 public class AddressService {
 
     private final AddressRepository addressRepository;
+    private final CountryService countryService;
+    private final CityService cityService;
 
-    public AddressService(AddressRepository addressRepository) {
+    public AddressService(AddressRepository addressRepository, CountryService countryService, CityService cityService) {
         this.addressRepository = addressRepository;
+        this.countryService = countryService;
+        this.cityService = cityService;
     }
 
     public List<Address> getAllAddresses(){
@@ -27,6 +33,10 @@ public class AddressService {
     }
 
     public void saveAddress(Address address){
+        Country country = countryService.getCountryById(address.getCountry().getId());
+        City city = cityService.getCityById(address.getCity().getId());
+        address.setCountry(country);
+        address.setCity(city);
         addressRepository.save(address);
     }
 

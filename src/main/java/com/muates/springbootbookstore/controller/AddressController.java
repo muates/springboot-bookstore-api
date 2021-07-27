@@ -1,6 +1,7 @@
 package com.muates.springbootbookstore.controller;
 
 import com.muates.springbootbookstore.domain.Address;
+import com.muates.springbootbookstore.domain.AddressRequest;
 import com.muates.springbootbookstore.service.AddressService;
 import org.springframework.web.bind.annotation.*;
 
@@ -27,7 +28,8 @@ public class AddressController {
     }
 
     @PostMapping({"", "/"})
-    public void saveAddress(@RequestBody Address address){
+    public void saveAddress(@RequestBody AddressRequest addressRequest){
+        Address address = convertToAddress(addressRequest);
         addressService.saveAddress(address);
     }
 
@@ -39,5 +41,14 @@ public class AddressController {
     @DeleteMapping("/{id}")
     public void deleteAddressById(@PathVariable Long id){
         addressService.deleteAddressById(id);
+    }
+
+    private Address convertToAddress(AddressRequest addressRequest) {
+        Address address = new Address();
+        address.setCountry(addressRequest.getCountry());
+        address.setCity(addressRequest.getCity());
+        address.setStreet(addressRequest.getStreet());
+        address.setPostCode(addressRequest.getPostCode());
+        return address;
     }
 }
