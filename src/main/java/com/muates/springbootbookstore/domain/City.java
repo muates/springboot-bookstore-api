@@ -1,5 +1,8 @@
 package com.muates.springbootbookstore.domain;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import javax.persistence.*;
 import java.util.Objects;
 
@@ -14,6 +17,7 @@ public class City {
     private String cityName;
 
     @ManyToOne(cascade = {CascadeType.MERGE, CascadeType.DETACH})
+    @JsonBackReference
     private Country country;
 
     public City() {

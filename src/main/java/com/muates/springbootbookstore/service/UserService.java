@@ -26,26 +26,24 @@ public class UserService {
         return userRepository.getById(id);
     }
 
-    public void saveUser(User user){
-        userRepository.save(user);
+    public User saveUser(User user){
+        return userRepository.save(user);
     }
 
     public void updateUserById(Long id, User user){
-
         User existUser = getUserById(id);
 
         if(existUser == null){
             throw new NoSuchElementException("User with id" + id + " does not found!");
         }
 
-        existUser.setFirstName(user.getFirstName());
-        existUser.setLastName(user.getLastName());
-        existUser.setMail(user.getMail());
-
-        userRepository.save(existUser);
+        userRepository.save(user);
     }
 
     public void deleteUserById(Long id){
-        userRepository.deleteById(id);
+        User user = getUserById(id);
+        if (user != null) {
+            userRepository.deleteById(id);
+        }
     }
 }

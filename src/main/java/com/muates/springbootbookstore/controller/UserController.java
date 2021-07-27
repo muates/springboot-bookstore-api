@@ -5,6 +5,7 @@ import com.muates.springbootbookstore.service.UserService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 import java.util.List;
 
 @RestController
@@ -28,17 +29,19 @@ public class UserController {
     }
 
     @PostMapping({"","/"})
-    public void saveUser(@RequestBody User user){
-        userService.saveUser(user);
+    public ResponseEntity<User> saveUser(@Valid @RequestBody User user){
+        return ResponseEntity.ok(userService.saveUser(user));
     }
 
     @PutMapping("/{id}")
-    public void updateUserById(@PathVariable Long id, @RequestBody User user){
+    public ResponseEntity<String> updateUserById(@PathVariable Long id, @Valid @RequestBody User user){
         userService.updateUserById(id, user);
+        return ResponseEntity.ok("User is updated");
     }
 
     @DeleteMapping("/{id}")
-    public void deleteUserById(@PathVariable Long id){
+    public ResponseEntity<String> deleteUserById(@PathVariable Long id){
         userService.deleteUserById(id);
+        return ResponseEntity.ok("User is deleted");
     }
 }
