@@ -41,7 +41,6 @@ public class UserService {
         existUser.setFirstName(user.getFirstName());
         existUser.setLastName(user.getLastName());
         existUser.setMail(user.getMail());
-        existUser.setGender(user.getGender());
 
         userRepository.save(existUser);
     }

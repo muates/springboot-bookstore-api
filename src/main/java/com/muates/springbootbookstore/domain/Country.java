@@ -1,8 +1,6 @@
 package com.muates.springbootbookstore.domain;
 
 import javax.persistence.*;
-import java.util.HashSet;
-import java.util.List;
 import java.util.Objects;
 import java.util.Set;
 
@@ -16,19 +14,12 @@ public class Country {
 
     private String countryName;
 
-    @OneToMany(mappedBy = "country", cascade = {CascadeType.MERGE, CascadeType.DETACH})
-    private Set<City> cities;
-
-    @OneToMany
-    private List<Address> address;
-
     public Country() {
     }
 
     public Country(Long id, String countryName, Set<City> cities) {
         this.id = id;
         this.countryName = countryName;
-        this.cities = cities;
     }
 
     public Long getId() {
@@ -47,20 +38,11 @@ public class Country {
         this.countryName = countryName;
     }
 
-    public Set<City> getCities() {
-        return cities;
-    }
-
-    public void setCities(Set<City> cities) {
-        this.cities = cities;
-    }
-
     @Override
     public String toString() {
         return "Country{" +
                 "id=" + id +
                 ", countryName='" + countryName + '\'' +
-                ", cities=" + cities +
                 '}';
     }
 
@@ -69,11 +51,11 @@ public class Country {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Country country = (Country) o;
-        return Objects.equals(id, country.id) && Objects.equals(countryName, country.countryName) && Objects.equals(cities, country.cities);
+        return Objects.equals(id, country.id) && Objects.equals(countryName, country.countryName);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, countryName, cities);
+        return Objects.hash(id, countryName);
     }
 }

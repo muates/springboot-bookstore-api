@@ -1,7 +1,6 @@
 package com.muates.springbootbookstore.domain;
 
 import javax.persistence.*;
-import java.util.List;
 import java.util.Objects;
 
 @Entity
@@ -14,11 +13,8 @@ public class City {
 
     private String cityName;
 
-    @ManyToOne()
+    @ManyToOne(cascade = {CascadeType.MERGE, CascadeType.DETACH})
     private Country country;
-
-    @OneToMany
-    private List<Address> address;
 
     public City() {
     }
@@ -58,7 +54,6 @@ public class City {
         return "City{" +
                 "id=" + id +
                 ", cityName='" + cityName + '\'' +
-                ", country=" + country +
                 '}';
     }
 
@@ -67,11 +62,11 @@ public class City {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         City city = (City) o;
-        return Objects.equals(id, city.id) && Objects.equals(cityName, city.cityName) && Objects.equals(country, city.country);
+        return Objects.equals(id, city.id) && Objects.equals(cityName, city.cityName);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, cityName, country);
+        return Objects.hash(id, cityName);
     }
 }

@@ -40,11 +40,9 @@ public class User {
     @Size(min = 11, max = 11)
     private String tcNo;
 
-    @OneToOne(cascade = CascadeType.MERGE)
+    @OneToOne(cascade = {CascadeType.MERGE, CascadeType.DETACH})
     private Gender gender;
 
-    @OneToOne(cascade = CascadeType.ALL)
-    private Address address;
 
     public User() {
     }
