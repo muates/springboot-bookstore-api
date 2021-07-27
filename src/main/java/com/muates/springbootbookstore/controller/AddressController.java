@@ -5,6 +5,7 @@ import com.muates.springbootbookstore.domain.AddressRequest;
 import com.muates.springbootbookstore.service.AddressService;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 import java.util.List;
 
 @RestController
@@ -28,13 +29,13 @@ public class AddressController {
     }
 
     @PostMapping({"", "/"})
-    public void saveAddress(@RequestBody AddressRequest addressRequest){
+    public void saveAddress(@Valid @RequestBody AddressRequest addressRequest){
         Address address = convertToAddress(addressRequest);
         addressService.saveAddress(address);
     }
 
     @PutMapping("/{id}")
-    public void updateAddressById(@PathVariable Long id, @RequestBody Address address){
+    public void updateAddressById(@PathVariable Long id, @Valid @RequestBody Address address){
         addressService.updateAddressById(id, address);
     }
 
