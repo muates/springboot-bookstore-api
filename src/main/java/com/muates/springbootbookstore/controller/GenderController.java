@@ -1,6 +1,7 @@
 package com.muates.springbootbookstore.controller;
 
 import com.muates.springbootbookstore.domain.Gender;
+import com.muates.springbootbookstore.dto.GenderRequest;
 import com.muates.springbootbookstore.service.GenderService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -29,7 +30,8 @@ public class GenderController {
     }
 
     @PostMapping({"", "/"})
-    public ResponseEntity<Gender> saveGender(@Valid @RequestBody Gender gender) {
+    public ResponseEntity<Gender> saveGender(@Valid @RequestBody GenderRequest genderRequest) {
+        Gender gender = convertToGender(genderRequest);
         return ResponseEntity.ok(genderService.saveGender(gender));
     }
 
@@ -43,5 +45,11 @@ public class GenderController {
     public ResponseEntity<String> deleteGenderById(@PathVariable Long id) {
         genderService.deleteGenderById(id);
         return ResponseEntity.ok("Gender is deleted");
+    }
+
+    private Gender convertToGender(GenderRequest genderRequest) {
+        return Gender.builder()
+                .gender(genderRequest.getGender())
+                .build();
     }
 }
