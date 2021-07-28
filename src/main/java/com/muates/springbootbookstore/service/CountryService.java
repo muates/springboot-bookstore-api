@@ -18,22 +18,22 @@ public class CountryService {
         this.countryRepository = countryRepository;
     }
 
-    public List<Country> getAllCountries(){
+    public List<Country> getAllCountries() {
         return countryRepository.findAll();
     }
 
-    public Country getCountryById(Long id){
+    public Country getCountryById(Long id) {
         return countryRepository.getById(id);
     }
 
-    public void saveCountry(Country country){
-        countryRepository.save(country);
+    public Country saveCountry(Country country) {
+        return countryRepository.save(country);
     }
 
-    public void updateCountryById(Long id, Country country){
+    public void updateCountryById(Long id, Country country) {
         Country existCountry = getCountryById(id);
 
-        if(existCountry == null){
+        if (existCountry == null) {
             throw new NoSuchElementException("User with id" + id + " does not found!");
         }
 
@@ -42,7 +42,10 @@ public class CountryService {
         countryRepository.save(existCountry);
     }
 
-    public void deleteCountryById(Long id){
-        countryRepository.deleteById(id);
+    public void deleteCountryById(Long id) {
+        Country country = getCountryById(id);
+        if (country != null) {
+            countryRepository.deleteById(id);
+        }
     }
 }
