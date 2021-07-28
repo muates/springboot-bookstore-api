@@ -1,7 +1,7 @@
 package com.muates.springbootbookstore.controller;
 
 import com.muates.springbootbookstore.domain.Address;
-import com.muates.springbootbookstore.domain.AddressRequest;
+import com.muates.springbootbookstore.dto.AddressRequest;
 import com.muates.springbootbookstore.service.AddressService;
 import org.springframework.web.bind.annotation.*;
 

@@ -1,5 +1,6 @@
 package com.muates.springbootbookstore.domain;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -20,6 +21,7 @@ public class Gender {
     private String gender;
 
     @OneToOne(mappedBy = "gender")
+    @JsonBackReference
     private User user;
 
 }

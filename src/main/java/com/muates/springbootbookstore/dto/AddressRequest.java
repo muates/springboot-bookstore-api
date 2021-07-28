@@ -1,5 +1,7 @@
-package com.muates.springbootbookstore.domain;
+package com.muates.springbootbookstore.dto;
 
+import com.muates.springbootbookstore.domain.City;
+import com.muates.springbootbookstore.domain.Country;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
