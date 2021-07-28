@@ -1,6 +1,5 @@
 package com.muates.springbootbookstore.domain;
 
-import com.fasterxml.jackson.annotation.JsonManagedReference;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -31,7 +30,6 @@ public class User {
     private String tcNo;
 
     @OneToOne(cascade = {CascadeType.MERGE, CascadeType.DETACH})
-    @JsonManagedReference
     private Gender gender;
 
 }
