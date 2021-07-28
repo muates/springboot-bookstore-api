@@ -1,9 +1,12 @@
 package com.muates.springbootbookstore.controller;
 
 import com.muates.springbootbookstore.domain.City;
+import com.muates.springbootbookstore.dto.CityRequest;
 import com.muates.springbootbookstore.service.CityService;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 import java.util.List;
 
 @RestController
@@ -16,28 +19,38 @@ public class CityController {
         this.cityService = cityService;
     }
 
-    @GetMapping({"","/"})
-    public List<City> getAllCities(){
-        return cityService.getAllCities();
+    @GetMapping({"", "/"})
+    public ResponseEntity<List<City>> getAllCities() {
+        return ResponseEntity.ok(cityService.getAllCities());
     }
 
     @GetMapping("/{id}")
-    public City getCityById(@PathVariable Long id){
-        return cityService.getCityById(id);
+    public ResponseEntity<City> getCityById(@PathVariable Long id) {
+        return ResponseEntity.ok(cityService.getCityById(id));
     }
 
-    @PostMapping({"","/"})
-    public void saveCity(@RequestBody City city){
-        cityService.saveCity(city);
+    @PostMapping({"", "/"})
+    public ResponseEntity<City> saveCity(@Valid @RequestBody CityRequest cityRequest) {
+        City city = convertToCity(cityRequest);
+        return ResponseEntity.ok(cityService.saveCity(city));
     }
 
     @PutMapping("/{id}")
-    public void updateCityById(@PathVariable Long id, @RequestBody City city){
+    public ResponseEntity<String> updateCityById(@PathVariable Long id, @Valid @RequestBody City city) {
         cityService.updateCityById(id, city);
+        return ResponseEntity.ok("City is updated");
     }
 
     @DeleteMapping("/{id}")
-    public void deleteCityById(@PathVariable Long id){
+    public ResponseEntity<String> deleteCityById(@PathVariable Long id) {
         cityService.deleteCityById(id);
+        return ResponseEntity.ok("City is deleted");
+    }
+
+    private City convertToCity(CityRequest cityRequest) {
+        return City.builder()
+                .cityName(cityRequest.getCityName())
+                .country(cityRequest.getCountry())
+                .build();
     }
 }

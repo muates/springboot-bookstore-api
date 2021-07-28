@@ -1,6 +1,7 @@
 package com.muates.springbootbookstore.service;
 
 import com.muates.springbootbookstore.domain.City;
+import com.muates.springbootbookstore.domain.Country;
 import com.muates.springbootbookstore.repository.CityRepository;
 import org.springframework.stereotype.Service;
 
@@ -13,27 +14,31 @@ import java.util.NoSuchElementException;
 public class CityService {
 
     private final CityRepository cityRepository;
+    private final CountryService countryService;
 
-    public CityService(CityRepository cityRepository) {
+    public CityService(CityRepository cityRepository, CountryService countryService) {
         this.cityRepository = cityRepository;
+        this.countryService = countryService;
     }
 
-    public List<City> getAllCities(){
+    public List<City> getAllCities() {
         return cityRepository.findAll();
     }
 
-    public City getCityById(Long id){
+    public City getCityById(Long id) {
         return cityRepository.getById(id);
     }
 
-    public void saveCity(City city){
-        cityRepository.save(city);
+    public City saveCity(City city) {
+        Country country = countryService.getCountryById(city.getCountry().getId());
+        city.setCountry(country);
+        return cityRepository.save(city);
     }
 
-    public void updateCityById(Long id, City city){
+    public void updateCityById(Long id, City city) {
         City existCity = getCityById(id);
 
-        if(existCity == null){
+        if (existCity == null) {
             throw new NoSuchElementException("User with id" + id + " does not found!");
         }
 
@@ -42,7 +47,10 @@ public class CityService {
         cityRepository.save(existCity);
     }
 
-    public void deleteCityById(Long id){
-        cityRepository.deleteById(id);
+    public void deleteCityById(Long id) {
+        City city = getCityById(id);
+        if (city != null) {
+            cityRepository.deleteById(id);
+        }
     }
 }
