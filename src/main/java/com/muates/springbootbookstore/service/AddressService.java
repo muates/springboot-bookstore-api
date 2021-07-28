@@ -32,12 +32,12 @@ public class AddressService {
         return addressRepository.getById(id);
     }
 
-    public void saveAddress(Address address){
+    public Address saveAddress(Address address) {
         Country country = countryService.getCountryById(address.getCountry().getId());
         City city = cityService.getCityById(address.getCity().getId());
         address.setCountry(country);
         address.setCity(city);
-        addressRepository.save(address);
+        return addressRepository.save(address);
     }
 
     public void updateAddressById(Long id, Address address){
@@ -56,7 +56,10 @@ public class AddressService {
         addressRepository.save(existAddress);
     }
 
-    public void deleteAddressById(Long id){
-        addressRepository.deleteById(id);
+    public void deleteAddressById(Long id) {
+        Address address = getAddressById(id);
+        if (address != null) {
+            addressRepository.deleteById(id);
+        }
     }
 }

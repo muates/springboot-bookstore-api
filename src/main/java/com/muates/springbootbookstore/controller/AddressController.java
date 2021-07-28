@@ -3,6 +3,7 @@ package com.muates.springbootbookstore.controller;
 import com.muates.springbootbookstore.domain.Address;
 import com.muates.springbootbookstore.dto.AddressRequest;
 import com.muates.springbootbookstore.service.AddressService;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
@@ -19,29 +20,31 @@ public class AddressController {
     }
 
     @GetMapping({"", "/"})
-    public List<Address> getAllAddresses(){
-        return addressService.getAllAddresses();
+    public ResponseEntity<List<Address>> getAllAddresses() {
+        return ResponseEntity.ok(addressService.getAllAddresses());
     }
 
     @GetMapping("/{id}")
-    public  Address getAddressById(@PathVariable Long id){
-        return addressService.getAddressById(id);
+    public ResponseEntity<Address> getAddressById(@PathVariable Long id) {
+        return ResponseEntity.ok(addressService.getAddressById(id));
     }
 
     @PostMapping({"", "/"})
-    public void saveAddress(@Valid @RequestBody AddressRequest addressRequest){
+    public ResponseEntity<Address> saveAddress(@Valid @RequestBody AddressRequest addressRequest) {
         Address address = convertToAddress(addressRequest);
-        addressService.saveAddress(address);
+        return ResponseEntity.ok(addressService.saveAddress(address));
     }
 
     @PutMapping("/{id}")
-    public void updateAddressById(@PathVariable Long id, @Valid @RequestBody Address address){
+    public ResponseEntity<String> updateAddressById(@PathVariable Long id, @Valid @RequestBody Address address) {
         addressService.updateAddressById(id, address);
+        return ResponseEntity.ok("Address is updated");
     }
 
     @DeleteMapping("/{id}")
-    public void deleteAddressById(@PathVariable Long id){
+    public ResponseEntity<String> deleteAddressById(@PathVariable Long id) {
         addressService.deleteAddressById(id);
+        return ResponseEntity.ok("Address is deleted");
     }
 
     private Address convertToAddress(AddressRequest addressRequest) {
