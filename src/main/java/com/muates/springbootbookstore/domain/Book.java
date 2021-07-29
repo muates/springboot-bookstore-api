@@ -1,5 +1,6 @@
 package com.muates.springbootbookstore.domain;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -25,10 +26,12 @@ public class Book {
 
     private Integer cost;
 
-    @ManyToOne
+    @ManyToOne(cascade = {CascadeType.MERGE, CascadeType.DETACH})
+    @JsonBackReference
     private Author author;
 
-    @ManyToOne
+    @ManyToOne(cascade = {CascadeType.MERGE, CascadeType.DETACH})
+    @JsonBackReference
     private Publisher publisher;
 
 }

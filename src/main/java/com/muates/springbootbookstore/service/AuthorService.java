@@ -18,22 +18,22 @@ public class AuthorService {
         this.authorRepository = authorRepository;
     }
 
-    public List<Author> getAllAuthors(){
+    public List<Author> getAllAuthors() {
         return authorRepository.findAll();
     }
 
-    public Author getAuthorById(Long id){
+    public Author getAuthorById(Long id) {
         return authorRepository.getById(id);
     }
 
-    public void saveAuthor(Author author){
-        authorRepository.save(author);
+    public Author saveAuthor(Author author) {
+        return authorRepository.save(author);
     }
 
-    public void updateAuthorById(Long id, Author author){
+    public void updateAuthorById(Long id, Author author) {
         Author existAuthor = getAuthorById(id);
 
-        if(existAuthor == null){
+        if (existAuthor == null) {
             throw new NoSuchElementException("User with id" + id + " does not found!");
         }
 
@@ -43,7 +43,10 @@ public class AuthorService {
         authorRepository.save(existAuthor);
     }
 
-    public void deleteAuthorById(Long id){
-        authorRepository.deleteById(id);
+    public void deleteAuthorById(Long id) {
+        Author author = getAuthorById(id);
+        if (author != null) {
+            authorRepository.deleteById(id);
+        }
     }
 }

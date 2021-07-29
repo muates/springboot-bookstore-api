@@ -1,9 +1,12 @@
 package com.muates.springbootbookstore.controller;
 
 import com.muates.springbootbookstore.domain.Author;
+import com.muates.springbootbookstore.dto.AuthorRequest;
 import com.muates.springbootbookstore.service.AuthorService;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 import java.util.List;
 
 @RestController
@@ -16,28 +19,38 @@ public class AuthorController {
         this.authorService = authorService;
     }
 
-    @GetMapping({"","/"})
-    public List<Author> getAllAuthors(){
-        return authorService.getAllAuthors();
+    @GetMapping({"", "/"})
+    public ResponseEntity<List<Author>> getAllAuthors() {
+        return ResponseEntity.ok(authorService.getAllAuthors());
     }
 
     @GetMapping("/{id}")
-    public Author getAuthorById(@PathVariable Long id){
-        return authorService.getAuthorById(id);
+    public ResponseEntity<Author> getAuthorById(@PathVariable Long id) {
+        return ResponseEntity.ok(authorService.getAuthorById(id));
     }
 
-    @PostMapping({"","/"})
-    public void saveAuthor(@RequestBody Author author){
-        authorService.saveAuthor(author);
+    @PostMapping({"", "/"})
+    public ResponseEntity<Author> saveAuthor(@Valid @RequestBody AuthorRequest authorRequest) {
+        Author author = convertToAuthor(authorRequest);
+        return ResponseEntity.ok(authorService.saveAuthor(author));
     }
 
     @PutMapping("/{id}")
-    public void updateAuthorById(@PathVariable Long id, @RequestBody Author author){
+    public ResponseEntity<String> updateAuthorById(@PathVariable Long id, @Valid @RequestBody Author author) {
         authorService.updateAuthorById(id, author);
+        return ResponseEntity.ok("Author is updated");
     }
 
     @DeleteMapping("/{id}")
-    public void deleteAuthorById(@PathVariable Long id){
+    public ResponseEntity<String> deleteAuthorById(@PathVariable Long id) {
         authorService.deleteAuthorById(id);
+        return ResponseEntity.ok("Author is deleted");
+    }
+
+    private Author convertToAuthor(AuthorRequest authorRequest) {
+        return Author.builder()
+                .firstName(authorRequest.getFirstName())
+                .lastName(authorRequest.getLastName())
+                .build();
     }
 }
