@@ -30,8 +30,6 @@ public class Author {
     private String lastName;
 
     @OneToMany(mappedBy = "author")
-    @JsonBackReference
-    @ToString.Exclude
     private Set<Book> books;
 
 }
