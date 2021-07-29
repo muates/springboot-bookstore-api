@@ -31,8 +31,6 @@ public class Publisher {
     private String name;
 
     @OneToMany(mappedBy = "publisher")
-    @JsonBackReference
-    @ToString.Exclude
     private Set<Book> books;
 
 }
