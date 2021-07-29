@@ -36,9 +36,11 @@ public class Book {
     private Integer cost;
 
     @ManyToOne(cascade = {CascadeType.MERGE, CascadeType.DETACH})
+    @ToString.Exclude
     private Author author;
 
     @ManyToOne(cascade = {CascadeType.MERGE, CascadeType.DETACH})
+    @ToString.Exclude
     private Publisher publisher;
 
 }
