@@ -20,13 +20,9 @@ public class User {
     private Long id;
 
     private String firstName;
-
     private String lastName;
-
-    private String username;
-
+    private String userName;
     private String mail;
-
     private String tcNo;
 
     @OneToOne(cascade = {CascadeType.MERGE, CascadeType.DETACH})

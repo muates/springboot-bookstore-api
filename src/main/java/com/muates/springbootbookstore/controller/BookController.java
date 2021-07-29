@@ -2,9 +2,12 @@ package com.muates.springbootbookstore.controller;
 
 import com.muates.springbootbookstore.domain.Book;
 import com.muates.springbootbookstore.service.BookService;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import javax.transaction.Transactional;
 import java.util.List;
+import java.util.Optional;
 
 @RestController
 @RequestMapping("/books")
@@ -22,8 +25,8 @@ public class BookController {
     }
 
     @GetMapping("/{id}")
-    public Book getBookId(@PathVariable Long id){
-        return bookService.getBookById(id);
+    public ResponseEntity<Book> getBookId(@PathVariable Long id){
+        return ResponseEntity.ok(bookService.getBookById(id));
     }
 
     @PostMapping({"","/"})

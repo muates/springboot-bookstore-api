@@ -15,7 +15,7 @@ import javax.validation.constraints.Size;
 @NoArgsConstructor
 @AllArgsConstructor
 public class UserRequest {
-    private int id;
+    private Long id;
 
     @NotBlank
     @Size(min = 1, max = 20)
