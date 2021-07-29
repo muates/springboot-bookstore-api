@@ -18,22 +18,22 @@ public class PublisherService {
         this.publisherRepository = publisherRepository;
     }
 
-    public List<Publisher> getAllPublishers(){
+    public List<Publisher> getAllPublishers() {
         return publisherRepository.findAll();
     }
 
-    public Publisher getPublisherById(Long id){
+    public Publisher getPublisherById(Long id) {
         return publisherRepository.getById(id);
     }
 
-    public void savePublisher(Publisher publisher){
-        publisherRepository.save(publisher);
+    public Publisher savePublisher(Publisher publisher) {
+        return publisherRepository.save(publisher);
     }
 
-    public void updatePublisherById(Long id, Publisher publisher){
+    public void updatePublisherById(Long id, Publisher publisher) {
         Publisher existPublisher = getPublisherById(id);
 
-        if(existPublisher == null){
+        if (existPublisher == null) {
             throw new NoSuchElementException("User with id" + id + " does not found!");
         }
 
@@ -42,7 +42,10 @@ public class PublisherService {
         publisherRepository.save(existPublisher);
     }
 
-    public void deletePublisherById(Long id){
-        publisherRepository.deleteById(id);
+    public void deletePublisherById(Long id) {
+        Publisher publisher = getPublisherById(id);
+        if (publisher != null) {
+            publisherRepository.deleteById(id);
+        }
     }
 }

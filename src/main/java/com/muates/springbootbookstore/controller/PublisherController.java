@@ -1,9 +1,12 @@
 package com.muates.springbootbookstore.controller;
 
 import com.muates.springbootbookstore.domain.Publisher;
+import com.muates.springbootbookstore.dto.PublisherRequest;
 import com.muates.springbootbookstore.service.PublisherService;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 import java.util.List;
 
 @RestController
@@ -17,27 +20,36 @@ public class PublisherController {
     }
 
     @GetMapping({"", "/"})
-    public List<Publisher> getAllPublishers(){
-        return  publisherService.getAllPublishers();
+    public ResponseEntity<List<Publisher>> getAllPublishers() {
+        return ResponseEntity.ok(publisherService.getAllPublishers());
     }
 
     @GetMapping("/{id}")
-    public Publisher getPublisherById(@PathVariable Long id){
-        return publisherService.getPublisherById(id);
+    public ResponseEntity<Publisher> getPublisherById(@PathVariable Long id) {
+        return ResponseEntity.ok(publisherService.getPublisherById(id));
     }
 
-    @PostMapping({"","/"})
-    public void savePublisher(@RequestBody Publisher publisher){
-        publisherService.savePublisher(publisher);
+    @PostMapping({"", "/"})
+    public ResponseEntity<Publisher> savePublisher(@Valid @RequestBody PublisherRequest publisherRequest) {
+        Publisher publisher = convertToPublisher(publisherRequest);
+        return ResponseEntity.ok(publisherService.savePublisher(publisher));
     }
 
     @PutMapping("/{id}")
-    public void updatePublisherById(@PathVariable Long id, @RequestBody Publisher publisher){
+    public ResponseEntity<String> updatePublisherById(@PathVariable Long id, @Valid @RequestBody Publisher publisher) {
         publisherService.updatePublisherById(id, publisher);
+        return ResponseEntity.ok("Publisher is updated");
     }
 
     @DeleteMapping("/{id}")
-    public void deletePublisherById(@PathVariable Long id){
+    public ResponseEntity<String> deletePublisherById(@PathVariable Long id) {
         publisherService.deletePublisherById(id);
+        return ResponseEntity.ok("Publisher is deleted");
+    }
+
+    private Publisher convertToPublisher(PublisherRequest publisherRequest) {
+        return Publisher.builder()
+                .name(publisherRequest.getName())
+                .build();
     }
 }

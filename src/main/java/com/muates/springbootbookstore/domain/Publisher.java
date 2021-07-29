@@ -1,6 +1,8 @@
 package com.muates.springbootbookstore.domain;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
@@ -12,6 +14,7 @@ import java.util.Set;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
+@Builder
 public class Publisher {
 
     @Id
@@ -20,7 +23,8 @@ public class Publisher {
 
     private String name;
 
-    @OneToMany(mappedBy = "publisher", cascade = CascadeType.MERGE)
+    @OneToMany(mappedBy = "publisher")
+    @JsonManagedReference
     private Set<Book> books;
 
 }
