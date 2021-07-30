@@ -23,7 +23,7 @@ public class GenderService {
     }
 
     public Gender getGenderById(Long id) {
-        return genderRepository.findById(id).orElseThrow(() -> new NoSuchElementException("User does not found!"));
+        return genderRepository.findById(id).orElseThrow(() -> new NoSuchElementException("Gender does not found!"));
     }
 
     public Gender saveGender(Gender gender) {

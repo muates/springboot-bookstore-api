@@ -26,7 +26,7 @@ public class CityService {
     }
 
     public City getCityById(Long id) {
-        return cityRepository.findById(id).orElseThrow(() -> new NoSuchElementException("User does not found!"));
+        return cityRepository.findById(id).orElseThrow(() -> new NoSuchElementException("City does not found!"));
     }
 
     public City saveCity(City city) {
