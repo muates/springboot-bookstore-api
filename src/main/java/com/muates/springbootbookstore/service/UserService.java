@@ -23,7 +23,7 @@ public class UserService {
     }
 
     public User getUserById(Long id){
-        return userRepository.getById(id);
+        return userRepository.findById(id).orElseThrow(() -> new NoSuchElementException("User does not found!"));
     }
 
     public User saveUser(User user){

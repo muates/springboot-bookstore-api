@@ -29,7 +29,7 @@ public class AddressService {
     }
 
     public Address getAddressById(Long id){
-        return addressRepository.getById(id);
+        return addressRepository.findById(id).orElseThrow(() -> new NoSuchElementException("User does nor found!"));
     }
 
     public Address saveAddress(Address address) {

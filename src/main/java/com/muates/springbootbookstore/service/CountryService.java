@@ -23,7 +23,7 @@ public class CountryService {
     }
 
     public Country getCountryById(Long id) {
-        return countryRepository.getById(id);
+        return countryRepository.findById(id).orElseThrow(() -> new NoSuchElementException("User does not found!"));
     }
 
     public Country saveCountry(Country country) {

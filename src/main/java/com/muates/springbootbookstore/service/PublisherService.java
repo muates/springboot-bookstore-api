@@ -23,7 +23,7 @@ public class PublisherService {
     }
 
     public Publisher getPublisherById(Long id) {
-        return publisherRepository.getById(id);
+        return publisherRepository.findById(id).orElseThrow(() -> new NoSuchElementException("User does not found!"));
     }
 
     public Publisher savePublisher(Publisher publisher) {

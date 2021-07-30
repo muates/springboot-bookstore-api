@@ -23,7 +23,7 @@ public class AuthorService {
     }
 
     public Author getAuthorById(Long id) {
-        return authorRepository.getById(id);
+        return authorRepository.findById(id).orElseThrow(() -> new NoSuchElementException("User does not found!"));
     }
 
     public Author saveAuthor(Author author) {
