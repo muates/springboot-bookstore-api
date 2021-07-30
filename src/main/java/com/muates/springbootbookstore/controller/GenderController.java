@@ -1,7 +1,7 @@
 package com.muates.springbootbookstore.controller;
 
 import com.muates.springbootbookstore.domain.Gender;
-import com.muates.springbootbookstore.dto.GenderRequest;
+import com.muates.springbootbookstore.dto.request.GenderRequest;
 import com.muates.springbootbookstore.service.GenderService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;

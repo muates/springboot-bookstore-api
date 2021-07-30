@@ -1,7 +1,7 @@
 package com.muates.springbootbookstore.controller;
 
 import com.muates.springbootbookstore.domain.City;
-import com.muates.springbootbookstore.dto.CityRequest;
+import com.muates.springbootbookstore.dto.request.CityRequest;
 import com.muates.springbootbookstore.service.CityService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;

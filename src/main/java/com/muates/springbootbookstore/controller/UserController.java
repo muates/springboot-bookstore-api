@@ -1,9 +1,8 @@
 package com.muates.springbootbookstore.controller;
 
 import com.muates.springbootbookstore.domain.User;
-import com.muates.springbootbookstore.dto.UserRequest;
-import com.muates.springbootbookstore.dto.UserResponse;
-import com.muates.springbootbookstore.repository.UserRepository;
+import com.muates.springbootbookstore.dto.request.UserRequest;
+import com.muates.springbootbookstore.dto.response.UserResponse;
 import com.muates.springbootbookstore.service.UserService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;

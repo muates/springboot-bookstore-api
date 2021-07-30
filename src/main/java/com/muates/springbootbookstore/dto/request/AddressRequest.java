@@ -1,4 +1,4 @@
-package com.muates.springbootbookstore.dto.Request;
+package com.muates.springbootbookstore.dto.request;
 
 import com.muates.springbootbookstore.domain.City;
 import com.muates.springbootbookstore.domain.Country;

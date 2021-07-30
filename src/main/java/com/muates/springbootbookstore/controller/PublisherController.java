@@ -1,7 +1,7 @@
 package com.muates.springbootbookstore.controller;
 
 import com.muates.springbootbookstore.domain.Publisher;
-import com.muates.springbootbookstore.dto.PublisherRequest;
+import com.muates.springbootbookstore.dto.request.PublisherRequest;
 import com.muates.springbootbookstore.service.PublisherService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;

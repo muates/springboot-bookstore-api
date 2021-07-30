@@ -1,7 +1,7 @@
 package com.muates.springbootbookstore.controller;
 
 import com.muates.springbootbookstore.domain.Country;
-import com.muates.springbootbookstore.dto.CountryRequest;
+import com.muates.springbootbookstore.dto.request.CountryRequest;
 import com.muates.springbootbookstore.service.CountryService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
