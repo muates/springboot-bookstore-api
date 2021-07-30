@@ -1,4 +1,4 @@
-package com.muates.springbootbookstore.dto;
+package com.muates.springbootbookstore.dto.Request;
 
 import com.muates.springbootbookstore.domain.Gender;
 import lombok.AllArgsConstructor;

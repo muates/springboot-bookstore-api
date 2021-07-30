@@ -1,4 +1,4 @@
-package com.muates.springbootbookstore.dto;
+package com.muates.springbootbookstore.dto.Request;
 
 import com.muates.springbootbookstore.domain.Author;
 import com.muates.springbootbookstore.domain.Publisher;

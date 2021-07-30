@@ -1,4 +1,4 @@
-package com.muates.springbootbookstore.dto;
+package com.muates.springbootbookstore.dto.Request;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -9,9 +9,12 @@ import javax.validation.constraints.NotBlank;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class GenderRequest {
+public class AuthorRequest {
     private Long id;
 
     @NotBlank
-    private String gender;
+    private String firstName;
+
+    @NotBlank
+    private String lastName;
 }
