@@ -48,12 +48,7 @@ public class AddressService {
             throw new NoSuchElementException("User with id" + id + " does not found!");
         }
 
-        existAddress.setCountry(address.getCountry());
-        existAddress.setCity(address.getCity());
-        existAddress.setStreet(address.getStreet());
-        existAddress.setPostCode(address.getPostCode());
-
-        addressRepository.save(existAddress);
+        addressRepository.save(address);
     }
 
     public void deleteAddressById(Long id) {

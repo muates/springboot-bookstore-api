@@ -37,9 +37,7 @@ public class PublisherService {
             throw new NoSuchElementException("User with id" + id + " does not found!");
         }
 
-        existPublisher.setName(publisher.getName());
-
-        publisherRepository.save(existPublisher);
+        publisherRepository.save(publisher);
     }
 
     public void deletePublisherById(Long id) {

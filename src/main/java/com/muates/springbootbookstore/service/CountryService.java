@@ -37,9 +37,7 @@ public class CountryService {
             throw new NoSuchElementException("User with id" + id + " does not found!");
         }
 
-        existCountry.setCountryName(country.getCountryName());
-
-        countryRepository.save(existCountry);
+        countryRepository.save(country);
     }
 
     public void deleteCountryById(Long id) {

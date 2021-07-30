@@ -37,10 +37,7 @@ public class AuthorService {
             throw new NoSuchElementException("User with id" + id + " does not found!");
         }
 
-        existAuthor.setFirstName(author.getFirstName());
-        existAuthor.setLastName(author.getLastName());
-
-        authorRepository.save(existAuthor);
+        authorRepository.save(author);
     }
 
     public void deleteAuthorById(Long id) {

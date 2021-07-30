@@ -37,9 +37,7 @@ public class GenderService {
             throw new NoSuchElementException("User with id" + id + " does not found!");
         }
 
-        existGender.setGender(gender.getGender());
-
-        genderRepository.save(existGender);
+        genderRepository.save(gender);
     }
 
     public void deleteGenderById(Long id) {

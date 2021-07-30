@@ -47,11 +47,7 @@ public class BookService {
             throw new NoSuchElementException("User with id" + id + " does not found!");
         }
 
-        existBook.setTitle(book.getTitle());
-        existBook.setIsbn(book.getIsbn());
-        existBook.setCost(book.getCost());
-
-        bookRepository.save(existBook);
+        bookRepository.save(book);
     }
 
     public void deleteBookById(Long id){

@@ -42,9 +42,7 @@ public class CityService {
             throw new NoSuchElementException("User with id" + id + " does not found!");
         }
 
-        existCity.setCityName(city.getCityName());
-
-        cityRepository.save(existCity);
+        cityRepository.save(city);
     }
 
     public void deleteCityById(Long id) {
