@@ -2,6 +2,7 @@ package com.muates.springbootbookstore.controller;
 
 import com.muates.springbootbookstore.domain.Publisher;
 import com.muates.springbootbookstore.dto.request.PublisherRequest;
+import com.muates.springbootbookstore.dto.response.PublisherResponse;
 import com.muates.springbootbookstore.service.PublisherService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -25,18 +26,20 @@ public class PublisherController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<Publisher> getPublisherById(@PathVariable Long id) {
-        return ResponseEntity.ok(publisherService.getPublisherById(id));
+    public ResponseEntity<PublisherResponse> getPublisherById(@PathVariable Long id) {
+        PublisherResponse publisherResponse = convertToPublisherResponse(publisherService.getPublisherById(id));
+        return ResponseEntity.ok(publisherResponse);
     }
 
     @PostMapping({"", "/"})
-    public ResponseEntity<Publisher> savePublisher(@Valid @RequestBody PublisherRequest publisherRequest) {
-        Publisher publisher = convertToPublisher(publisherRequest);
-        return ResponseEntity.ok(publisherService.savePublisher(publisher));
+    public ResponseEntity<PublisherResponse> savePublisher(@Valid @RequestBody PublisherRequest publisherRequest) {
+        Publisher savedPublisher = publisherService.savePublisher(convertToPublisher(publisherRequest));
+        return ResponseEntity.ok(convertToPublisherResponse(savedPublisher));
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<String> updatePublisherById(@PathVariable Long id, @Valid @RequestBody Publisher publisher) {
+    public ResponseEntity<String> updatePublisherById(@PathVariable Long id, @Valid @RequestBody PublisherRequest publisherRequest) {
+        Publisher publisher = convertToPublisher(publisherRequest);
         publisherService.updatePublisherById(id, publisher);
         return ResponseEntity.ok("Publisher is updated");
     }
@@ -49,7 +52,15 @@ public class PublisherController {
 
     private Publisher convertToPublisher(PublisherRequest publisherRequest) {
         return Publisher.builder()
+                .id(publisherRequest.getId())
                 .name(publisherRequest.getName())
+                .build();
+    }
+
+    private PublisherResponse convertToPublisherResponse(Publisher publisher) {
+        return PublisherResponse.builder()
+                .id(publisher.getId())
+                .name(publisher.getName())
                 .build();
     }
 }

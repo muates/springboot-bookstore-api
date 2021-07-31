@@ -2,6 +2,7 @@ package com.muates.springbootbookstore.controller;
 
 import com.muates.springbootbookstore.domain.Author;
 import com.muates.springbootbookstore.dto.request.AuthorRequest;
+import com.muates.springbootbookstore.dto.response.AuthorResponse;
 import com.muates.springbootbookstore.service.AuthorService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -25,18 +26,20 @@ public class AuthorController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<Author> getAuthorById(@PathVariable Long id) {
-        return ResponseEntity.ok(authorService.getAuthorById(id));
+    public ResponseEntity<AuthorResponse> getAuthorById(@PathVariable Long id) {
+        AuthorResponse authorResponse = convertToAuthorResponse(authorService.getAuthorById(id));
+        return ResponseEntity.ok(authorResponse);
     }
 
     @PostMapping({"", "/"})
-    public ResponseEntity<Author> saveAuthor(@Valid @RequestBody AuthorRequest authorRequest) {
-        Author author = convertToAuthor(authorRequest);
-        return ResponseEntity.ok(authorService.saveAuthor(author));
+    public ResponseEntity<AuthorResponse> saveAuthor(@Valid @RequestBody AuthorRequest authorRequest) {
+        Author savedAuthor = authorService.saveAuthor(convertToAuthor(authorRequest));
+        return ResponseEntity.ok(convertToAuthorResponse(savedAuthor));
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<String> updateAuthorById(@PathVariable Long id, @Valid @RequestBody Author author) {
+    public ResponseEntity<String> updateAuthorById(@PathVariable Long id, @Valid @RequestBody AuthorRequest authorRequest) {
+        Author author = convertToAuthor(authorRequest);
         authorService.updateAuthorById(id, author);
         return ResponseEntity.ok("Author is updated");
     }
@@ -49,8 +52,18 @@ public class AuthorController {
 
     private Author convertToAuthor(AuthorRequest authorRequest) {
         return Author.builder()
+                .id(authorRequest.getId())
                 .firstName(authorRequest.getFirstName())
                 .lastName(authorRequest.getLastName())
+                .build();
+    }
+
+    private AuthorResponse convertToAuthorResponse(Author author) {
+        return AuthorResponse.builder()
+                .id(author.getId())
+                .firstName(author.getFirstName())
+                .lastName(author.getLastName())
+                .books(author.getBooks())
                 .build();
     }
 }

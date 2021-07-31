@@ -2,6 +2,7 @@ package com.muates.springbootbookstore.controller;
 
 import com.muates.springbootbookstore.domain.Gender;
 import com.muates.springbootbookstore.dto.request.GenderRequest;
+import com.muates.springbootbookstore.dto.response.GenderResponse;
 import com.muates.springbootbookstore.service.GenderService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -25,18 +26,20 @@ public class GenderController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<Gender> getGenderById(@PathVariable Long id) {
-        return ResponseEntity.ok(genderService.getGenderById(id));
+    public ResponseEntity<GenderResponse> getGenderById(@PathVariable Long id) {
+        GenderResponse genderResponse = convertToGenderResponse(genderService.getGenderById(id));
+        return ResponseEntity.ok(genderResponse);
     }
 
     @PostMapping({"", "/"})
-    public ResponseEntity<Gender> saveGender(@Valid @RequestBody GenderRequest genderRequest) {
-        Gender gender = convertToGender(genderRequest);
-        return ResponseEntity.ok(genderService.saveGender(gender));
+    public ResponseEntity<GenderResponse> saveGender(@Valid @RequestBody GenderRequest genderRequest) {
+        Gender savedGender = genderService.saveGender(convertToGender(genderRequest));
+        return ResponseEntity.ok(convertToGenderResponse(savedGender));
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<String> updateGenderById(@PathVariable Long id, @Valid @RequestBody Gender gender) {
+    public ResponseEntity<String> updateGenderById(@PathVariable Long id, @Valid @RequestBody GenderRequest genderRequest) {
+        Gender gender = convertToGender(genderRequest);
         genderService.updateGenderById(id, gender);
         return ResponseEntity.ok("Gender is updated");
     }
@@ -49,7 +52,15 @@ public class GenderController {
 
     private Gender convertToGender(GenderRequest genderRequest) {
         return Gender.builder()
+                .id(genderRequest.getId())
                 .gender(genderRequest.getGender())
+                .build();
+    }
+
+    private GenderResponse convertToGenderResponse(Gender gender) {
+        return GenderResponse.builder()
+                .id(gender.getId())
+                .gender(gender.getGender())
                 .build();
     }
 }
