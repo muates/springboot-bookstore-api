@@ -1,14 +1,10 @@
 package com.muates.springbootbookstore.domain;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
-import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.fasterxml.jackson.annotation.JsonManagedReference;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
-import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
-import lombok.ToString;
 
 import javax.persistence.*;
 import java.util.Set;
@@ -30,6 +26,7 @@ public class Author {
     private String lastName;
 
     @OneToMany(mappedBy = "author")
+    @JsonBackReference
     private Set<Book> books;
 
 }

@@ -1,21 +1,9 @@
 package com.muates.springbootbookstore.domain;
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.EqualsAndHashCode;
-import lombok.NoArgsConstructor;
-import lombok.ToString;
+import lombok.*;
 
-import javax.persistence.CascadeType;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.ManyToOne;
-import javax.persistence.Table;
+import javax.persistence.*;
 
 @Entity
 @Table(name = "books")
@@ -36,10 +24,12 @@ public class Book {
     private Integer cost;
 
     @ManyToOne(cascade = {CascadeType.MERGE, CascadeType.DETACH})
+    @JsonManagedReference
     @ToString.Exclude
     private Author author;
 
     @ManyToOne(cascade = {CascadeType.MERGE, CascadeType.DETACH})
+    @JsonManagedReference
     @ToString.Exclude
     private Publisher publisher;
 
