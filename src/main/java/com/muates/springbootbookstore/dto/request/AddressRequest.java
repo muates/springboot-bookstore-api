@@ -13,7 +13,7 @@ import javax.validation.constraints.NotNull;
 @NoArgsConstructor
 @AllArgsConstructor
 public class AddressRequest {
-    private int id;
+    private Long id;
 
     @NotNull
     private Country country;
