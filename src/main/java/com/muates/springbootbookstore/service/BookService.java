@@ -3,6 +3,7 @@ package com.muates.springbootbookstore.service;
 import com.muates.springbootbookstore.domain.Author;
 import com.muates.springbootbookstore.domain.Book;
 import com.muates.springbootbookstore.domain.Publisher;
+import com.muates.springbootbookstore.exception.ResourceNotFoundException;
 import com.muates.springbootbookstore.repository.BookRepository;
 import org.springframework.stereotype.Service;
 
@@ -29,7 +30,7 @@ public class BookService {
     }
 
     public Book getBookById(Long id){
-        return bookRepository.findById(id).orElseThrow(() -> new NoSuchElementException("Book does not found!"));
+        return bookRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException("Book does not found!"));
     }
 
     public Book saveBook(Book book){

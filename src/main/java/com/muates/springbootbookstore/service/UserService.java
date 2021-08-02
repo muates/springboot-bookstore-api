@@ -1,12 +1,12 @@
 package com.muates.springbootbookstore.service;
 
 import com.muates.springbootbookstore.domain.User;
+import com.muates.springbootbookstore.exception.ResourceNotFoundException;
 import com.muates.springbootbookstore.repository.UserRepository;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
 import java.util.List;
-import java.util.NoSuchElementException;
 
 @Service
 @Transactional
@@ -23,7 +23,7 @@ public class UserService {
     }
 
     public User getUserById(Long id){
-        return userRepository.findById(id).orElseThrow(() -> new NoSuchElementException("User does not found!"));
+        return userRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException("User does not found!"));
     }
 
     public User saveUser(User user){
@@ -31,14 +31,7 @@ public class UserService {
     }
 
     public void updateUserById(Long id, User user){
-        User existUser = getUserById(id);
-
-        if(existUser == null){
-            throw new NoSuchElementException("User with id" + id + " does not found!");
-        }
-
-
-
+        getUserById(id);
         userRepository.save(user);
     }
 
