@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping("/books")
@@ -20,9 +21,11 @@ public class BookController {
         this.bookService = bookService;
     }
 
-    @GetMapping({"","/"})
-    public ResponseEntity<List<Book>> getAllBooks(){
-        return ResponseEntity.ok(bookService.getAllBooks());
+    @GetMapping({"", "/"})
+    public ResponseEntity<List<BookResponse>> getAllBooks() {
+        List<Book> bookList = bookService.getAllBooks();
+        List<BookResponse> bookResponses = bookList.stream().map(book -> convertToBookResponse(book)).collect(Collectors.toList());
+        return ResponseEntity.ok(bookResponses);
     }
 
     @GetMapping("/{id}")

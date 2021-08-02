@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping("/users")
@@ -20,13 +21,11 @@ public class UserController {
         this.userService = userService;
     }
 
-    @GetMapping({"","/"})
-    public ResponseEntity<List<User>> getAllUsers(){
-//        userList.forEach();
-//        userList.stream().map();
-//        for
-        // List<UserResponse> userResponseList
-        return ResponseEntity.ok(userService.getAllUsers());
+    @GetMapping({"", "/"})
+    public ResponseEntity<List<UserResponse>> getAllUsers() {
+        List<User> userList = userService.getAllUsers();
+        List<UserResponse> userResponses = userList.stream().map(user -> convertToUserResponse(user)).collect(Collectors.toList());
+        return ResponseEntity.ok(userResponses);
     }
 
     @GetMapping("/{id}")

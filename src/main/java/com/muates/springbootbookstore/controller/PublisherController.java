@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping("/publishers")
@@ -21,8 +22,10 @@ public class PublisherController {
     }
 
     @GetMapping({"", "/"})
-    public ResponseEntity<List<Publisher>> getAllPublishers() {
-        return ResponseEntity.ok(publisherService.getAllPublishers());
+    public ResponseEntity<List<PublisherResponse>> getAllPublishers() {
+        List<Publisher> publisherList = publisherService.getAllPublishers();
+        List<PublisherResponse> publisherResponses = publisherList.stream().map(publisher -> convertToPublisherResponse(publisher)).collect(Collectors.toList());
+        return ResponseEntity.ok(publisherResponses);
     }
 
     @GetMapping("/{id}")

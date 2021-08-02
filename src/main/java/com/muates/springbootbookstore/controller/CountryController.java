@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping("/countries")
@@ -21,8 +22,10 @@ public class CountryController {
     }
 
     @GetMapping({"", "/"})
-    public ResponseEntity<List<Country>> getAllCountries() {
-        return ResponseEntity.ok(countryService.getAllCountries());
+    public ResponseEntity<List<CountryResponse>> getAllCountries() {
+        List<Country> countryList = countryService.getAllCountries();
+        List<CountryResponse> countryResponses = countryList.stream().map(country -> convertToCountryResponse(country)).collect(Collectors.toList());
+        return ResponseEntity.ok(countryResponses);
     }
 
     @GetMapping("/{id}")

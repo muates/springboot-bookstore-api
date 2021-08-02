@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping("/cities")
@@ -21,8 +22,10 @@ public class CityController {
     }
 
     @GetMapping({"", "/"})
-    public ResponseEntity<List<City>> getAllCities() {
-        return ResponseEntity.ok(cityService.getAllCities());
+    public ResponseEntity<List<CityResponse>> getAllCities() {
+        List<City> cityList = cityService.getAllCities();
+        List<CityResponse> cityResponses = cityList.stream().map(city -> convertToCityResponse(city)).collect(Collectors.toList());
+        return ResponseEntity.ok(cityResponses);
     }
 
     @GetMapping("/{id}")

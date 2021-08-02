@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping("/authors")
@@ -21,8 +22,10 @@ public class AuthorController {
     }
 
     @GetMapping({"", "/"})
-    public ResponseEntity<List<Author>> getAllAuthors() {
-        return ResponseEntity.ok(authorService.getAllAuthors());
+    public ResponseEntity<List<AuthorResponse>> getAllAuthors() {
+        List<Author> authorList = authorService.getAllAuthors();
+        List<AuthorResponse> authorResponses = authorList.stream().map(author -> convertToAuthorResponse(author)).collect(Collectors.toList());
+        return ResponseEntity.ok(authorResponses);
     }
 
     @GetMapping("/{id}")

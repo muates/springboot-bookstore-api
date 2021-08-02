@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping("/genders")
@@ -21,8 +22,10 @@ public class GenderController {
     }
 
     @GetMapping({"", "/"})
-    public ResponseEntity<List<Gender>> getAllGenders() {
-        return ResponseEntity.ok(genderService.getAllGenders());
+    public ResponseEntity<List<GenderResponse>> getAllGenders() {
+        List<Gender> genderList = genderService.getAllGenders();
+        List<GenderResponse> genderResponses = genderList.stream().map(gender -> convertToGenderResponse(gender)).collect(Collectors.toList());
+        return ResponseEntity.ok(genderResponses);
     }
 
     @GetMapping("/{id}")

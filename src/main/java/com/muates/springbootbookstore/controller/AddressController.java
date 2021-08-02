@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping("/addresses")
@@ -21,8 +22,10 @@ public class AddressController {
     }
 
     @GetMapping({"", "/"})
-    public ResponseEntity<List<Address>> getAllAddresses() {
-        return ResponseEntity.ok(addressService.getAllAddresses());
+    public ResponseEntity<List<AddressResponse>> getAllAddresses() {
+        List<Address> addressList = addressService.getAllAddresses();
+        List<AddressResponse> addressResponses = addressList.stream().map(address -> convertToAddressResponse(address)).collect(Collectors.toList());
+        return ResponseEntity.ok(addressResponses);
     }
 
     @GetMapping("/{id}")
