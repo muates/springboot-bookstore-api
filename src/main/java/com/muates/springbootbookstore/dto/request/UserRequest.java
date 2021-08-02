@@ -29,7 +29,7 @@ public class UserRequest {
     @Size(min = 3, max = 18)
     @NaturalId
     @Column(unique = true)
-    private String username;
+    private String userName;
 
     @NotBlank
     @Email

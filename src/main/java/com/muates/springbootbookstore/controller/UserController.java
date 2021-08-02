@@ -1,15 +1,22 @@
 package com.muates.springbootbookstore.controller;
 
 import com.muates.springbootbookstore.domain.User;
+import com.muates.springbootbookstore.dto.UserConverter;
 import com.muates.springbootbookstore.dto.request.UserRequest;
 import com.muates.springbootbookstore.dto.response.UserResponse;
 import com.muates.springbootbookstore.service.UserService;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 
 import javax.validation.Valid;
 import java.util.List;
-import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping("/users")
@@ -24,25 +31,24 @@ public class UserController {
     @GetMapping({"", "/"})
     public ResponseEntity<List<UserResponse>> getAllUsers() {
         List<User> userList = userService.getAllUsers();
-        List<UserResponse> userResponses = userList.stream().map(user -> convertToUserResponse(user)).collect(Collectors.toList());
-        return ResponseEntity.ok(userResponses);
+        return ResponseEntity.ok(UserConverter.convertAllUsersToUserResponses(userList));
     }
 
     @GetMapping("/{id}")
     public ResponseEntity<UserResponse> getUserById(@PathVariable Long id){
-        UserResponse userResponse = convertToUserResponse(userService.getUserById(id));
+        UserResponse userResponse = UserConverter.convertToUserResponse(userService.getUserById(id));
         return ResponseEntity.ok(userResponse);
     }
 
     @PostMapping({"", "/"})
     public ResponseEntity<UserResponse> saveUser(@Valid @RequestBody UserRequest userRequest) {
-        User savedUser = userService.saveUser(convertToUser(userRequest));
-        return ResponseEntity.ok(convertToUserResponse(savedUser));
+        User savedUser = userService.saveUser(UserConverter.convertToUser(userRequest));
+        return ResponseEntity.ok(UserConverter.convertToUserResponse(savedUser));
     }
 
     @PutMapping("/{id}")
     public ResponseEntity<String> updateUserById(@PathVariable Long id, @Valid @RequestBody UserRequest userRequest) {
-        User user = convertToUser(userRequest);
+        User user = UserConverter.convertToUser(userRequest);
         userService.updateUserById(id, user);
         return ResponseEntity.ok("User is updated");
     }
@@ -53,25 +59,4 @@ public class UserController {
         return ResponseEntity.ok("User is deleted");
     }
 
-    private User convertToUser(UserRequest userRequest) {
-        return User.builder()
-                .id(userRequest.getId())
-                .firstName(userRequest.getFirstName())
-                .lastName(userRequest.getLastName())
-                .userName(userRequest.getUsername())
-                .mail(userRequest.getMail())
-                .tcNo(userRequest.getTcNo())
-                .gender(userRequest.getGender())
-                .build();
-    }
-
-    private UserResponse convertToUserResponse(User user) {
-        return UserResponse.builder()
-                .id(user.getId())
-                .firstName(user.getFirstName())
-                .lastName(user.getLastName())
-                .userName(user.getUserName())
-                .gender(user.getGender())
-                .build();
-    }
 }
