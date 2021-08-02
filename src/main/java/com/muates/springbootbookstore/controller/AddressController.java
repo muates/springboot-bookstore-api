@@ -1,6 +1,7 @@
 package com.muates.springbootbookstore.controller;
 
 import com.muates.springbootbookstore.domain.Address;
+import com.muates.springbootbookstore.dto.AddressConverter;
 import com.muates.springbootbookstore.dto.request.AddressRequest;
 import com.muates.springbootbookstore.dto.response.AddressResponse;
 import com.muates.springbootbookstore.service.AddressService;
@@ -9,7 +10,6 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 import java.util.List;
-import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping("/addresses")
@@ -24,25 +24,24 @@ public class AddressController {
     @GetMapping({"", "/"})
     public ResponseEntity<List<AddressResponse>> getAllAddresses() {
         List<Address> addressList = addressService.getAllAddresses();
-        List<AddressResponse> addressResponses = addressList.stream().map(address -> convertToAddressResponse(address)).collect(Collectors.toList());
-        return ResponseEntity.ok(addressResponses);
+        return ResponseEntity.ok(AddressConverter.convertAllAddressesToAddressResponse(addressList));
     }
 
     @GetMapping("/{id}")
     public ResponseEntity<AddressResponse> getAddressById(@PathVariable Long id) {
-        AddressResponse addressResponse = convertToAddressResponse(addressService.getAddressById(id));
+        AddressResponse addressResponse = AddressConverter.convertToAddressResponse(addressService.getAddressById(id));
         return ResponseEntity.ok(addressResponse);
     }
 
     @PostMapping({"", "/"})
     public ResponseEntity<AddressResponse> saveAddress(@Valid @RequestBody AddressRequest addressRequest) {
-        Address savedAddress = addressService.saveAddress(convertToAddress(addressRequest));
-        return ResponseEntity.ok(convertToAddressResponse(savedAddress));
+        Address savedAddress = addressService.saveAddress(AddressConverter.convertToAddress(addressRequest));
+        return ResponseEntity.ok(AddressConverter.convertToAddressResponse(savedAddress));
     }
 
     @PutMapping("/{id}")
     public ResponseEntity<String> updateAddressById(@PathVariable Long id, @Valid @RequestBody AddressRequest addressRequest) {
-        Address address = convertToAddress(addressRequest);
+        Address address = AddressConverter.convertToAddress(addressRequest);
         addressService.updateAddressById(id, address);
         return ResponseEntity.ok("Address is updated");
     }
@@ -53,23 +52,4 @@ public class AddressController {
         return ResponseEntity.ok("Address is deleted");
     }
 
-    private Address convertToAddress(AddressRequest addressRequest) {
-        return Address.builder()
-                .id(addressRequest.getId())
-                .country(addressRequest.getCountry())
-                .city(addressRequest.getCity())
-                .street(addressRequest.getStreet())
-                .postCode(addressRequest.getPostCode())
-                .build();
-    }
-
-    private AddressResponse convertToAddressResponse(Address address) {
-        return AddressResponse.builder()
-                .id(address.getId())
-                .country(address.getCountry())
-                .city(address.getCity())
-                .street(address.getStreet())
-                .postCode(address.getPostCode())
-                .build();
-    }
 }

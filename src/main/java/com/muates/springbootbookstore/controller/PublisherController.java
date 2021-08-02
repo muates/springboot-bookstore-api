@@ -1,6 +1,7 @@
 package com.muates.springbootbookstore.controller;
 
 import com.muates.springbootbookstore.domain.Publisher;
+import com.muates.springbootbookstore.dto.PublisherConverter;
 import com.muates.springbootbookstore.dto.request.PublisherRequest;
 import com.muates.springbootbookstore.dto.response.PublisherResponse;
 import com.muates.springbootbookstore.service.PublisherService;
@@ -9,7 +10,6 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 import java.util.List;
-import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping("/publishers")
@@ -24,25 +24,24 @@ public class PublisherController {
     @GetMapping({"", "/"})
     public ResponseEntity<List<PublisherResponse>> getAllPublishers() {
         List<Publisher> publisherList = publisherService.getAllPublishers();
-        List<PublisherResponse> publisherResponses = publisherList.stream().map(publisher -> convertToPublisherResponse(publisher)).collect(Collectors.toList());
-        return ResponseEntity.ok(publisherResponses);
+        return ResponseEntity.ok(PublisherConverter.convertAllPublishersToPublisherResponses(publisherList));
     }
 
     @GetMapping("/{id}")
     public ResponseEntity<PublisherResponse> getPublisherById(@PathVariable Long id) {
-        PublisherResponse publisherResponse = convertToPublisherResponse(publisherService.getPublisherById(id));
+        PublisherResponse publisherResponse = PublisherConverter.convertToPublisherResponse(publisherService.getPublisherById(id));
         return ResponseEntity.ok(publisherResponse);
     }
 
     @PostMapping({"", "/"})
     public ResponseEntity<PublisherResponse> savePublisher(@Valid @RequestBody PublisherRequest publisherRequest) {
-        Publisher savedPublisher = publisherService.savePublisher(convertToPublisher(publisherRequest));
-        return ResponseEntity.ok(convertToPublisherResponse(savedPublisher));
+        Publisher savedPublisher = publisherService.savePublisher(PublisherConverter.convertToPublisher(publisherRequest));
+        return ResponseEntity.ok(PublisherConverter.convertToPublisherResponse(savedPublisher));
     }
 
     @PutMapping("/{id}")
     public ResponseEntity<String> updatePublisherById(@PathVariable Long id, @Valid @RequestBody PublisherRequest publisherRequest) {
-        Publisher publisher = convertToPublisher(publisherRequest);
+        Publisher publisher = PublisherConverter.convertToPublisher(publisherRequest);
         publisherService.updatePublisherById(id, publisher);
         return ResponseEntity.ok("Publisher is updated");
     }
@@ -53,17 +52,4 @@ public class PublisherController {
         return ResponseEntity.ok("Publisher is deleted");
     }
 
-    private Publisher convertToPublisher(PublisherRequest publisherRequest) {
-        return Publisher.builder()
-                .id(publisherRequest.getId())
-                .name(publisherRequest.getName())
-                .build();
-    }
-
-    private PublisherResponse convertToPublisherResponse(Publisher publisher) {
-        return PublisherResponse.builder()
-                .id(publisher.getId())
-                .name(publisher.getName())
-                .build();
-    }
 }
