@@ -5,6 +5,7 @@ import com.muates.springbootbookstore.domain.City;
 import com.muates.springbootbookstore.domain.Country;
 import com.muates.springbootbookstore.exception.ResourceNotFoundException;
 import com.muates.springbootbookstore.repository.AddressRepository;
+import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
