@@ -40,6 +40,12 @@ public class UserController {
         return ResponseEntity.ok(userResponse);
     }
 
+    // TODO - GetMapping - return all male users
+    // TODO - GetMapping - return all female users
+    // TODO - GetMapping - pathVariable
+    // TODO - GetMapping - requestBody
+    // TODO - GetMapping - queryParameter
+
     @PostMapping({"", "/"})
     public ResponseEntity<UserResponse> saveUser(@Valid @RequestBody UserRequest userRequest) {
         User savedUser = userService.saveUser(UserConverter.convertToUser(userRequest));
