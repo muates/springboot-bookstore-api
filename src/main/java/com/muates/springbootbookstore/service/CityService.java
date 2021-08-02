@@ -2,12 +2,12 @@ package com.muates.springbootbookstore.service;
 
 import com.muates.springbootbookstore.domain.City;
 import com.muates.springbootbookstore.domain.Country;
+import com.muates.springbootbookstore.exception.ResourceNotFoundException;
 import com.muates.springbootbookstore.repository.CityRepository;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
 import java.util.List;
-import java.util.NoSuchElementException;
 
 @Service
 @Transactional
@@ -26,7 +26,7 @@ public class CityService {
     }
 
     public City getCityById(Long id) {
-        return cityRepository.findById(id).orElseThrow(() -> new NoSuchElementException("City does not found!"));
+        return cityRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException("City does not found!"));
     }
 
     public City saveCity(City city) {
@@ -36,12 +36,7 @@ public class CityService {
     }
 
     public void updateCityById(Long id, City city) {
-        City existCity = getCityById(id);
-
-        if (existCity == null) {
-            throw new NoSuchElementException("User with id" + id + " does not found!");
-        }
-
+        getCityById(id);
         cityRepository.save(city);
     }
 

@@ -5,12 +5,10 @@ import com.muates.springbootbookstore.domain.City;
 import com.muates.springbootbookstore.domain.Country;
 import com.muates.springbootbookstore.exception.ResourceNotFoundException;
 import com.muates.springbootbookstore.repository.AddressRepository;
-import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
 import java.util.List;
-import java.util.NoSuchElementException;
 
 @Service
 @Transactional
@@ -44,12 +42,7 @@ public class AddressService {
 
     public void updateAddressById(Long id, Address address){
 
-        Address existAddress = getAddressById(id);
-
-        if(existAddress == null){
-            throw new NoSuchElementException("User with id" + id + " does not found!");
-        }
-
+        getAddressById(id);
         addressRepository.save(address);
     }
 

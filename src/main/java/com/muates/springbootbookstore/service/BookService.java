@@ -9,7 +9,6 @@ import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
 import java.util.List;
-import java.util.NoSuchElementException;
 
 @Service
 @Transactional
@@ -42,12 +41,7 @@ public class BookService {
     }
 
     public void updateBookById(Long id, Book book){
-        Book existBook = getBookById(id);
-
-        if(existBook == null){
-            throw new NoSuchElementException("User with id" + id + " does not found!");
-        }
-
+        getBookById(id);
         bookRepository.save(book);
     }
 

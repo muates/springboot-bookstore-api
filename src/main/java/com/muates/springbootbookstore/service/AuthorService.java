@@ -1,12 +1,12 @@
 package com.muates.springbootbookstore.service;
 
 import com.muates.springbootbookstore.domain.Author;
+import com.muates.springbootbookstore.exception.ResourceNotFoundException;
 import com.muates.springbootbookstore.repository.AuthorRepository;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
 import java.util.List;
-import java.util.NoSuchElementException;
 
 @Service
 @Transactional
@@ -23,7 +23,7 @@ public class AuthorService {
     }
 
     public Author getAuthorById(Long id) {
-        return authorRepository.findById(id).orElseThrow(() -> new NoSuchElementException("Author does not found!"));
+        return authorRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException("Author does not found!"));
     }
 
     public Author saveAuthor(Author author) {
@@ -31,12 +31,7 @@ public class AuthorService {
     }
 
     public void updateAuthorById(Long id, Author author) {
-        Author existAuthor = getAuthorById(id);
-
-        if (existAuthor == null) {
-            throw new NoSuchElementException("User with id" + id + " does not found!");
-        }
-
+        getAuthorById(id);
         authorRepository.save(author);
     }
 

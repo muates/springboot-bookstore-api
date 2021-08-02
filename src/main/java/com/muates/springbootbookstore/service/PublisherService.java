@@ -1,12 +1,12 @@
 package com.muates.springbootbookstore.service;
 
 import com.muates.springbootbookstore.domain.Publisher;
+import com.muates.springbootbookstore.exception.ResourceNotFoundException;
 import com.muates.springbootbookstore.repository.PublisherRepository;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
 import java.util.List;
-import java.util.NoSuchElementException;
 
 @Service
 @Transactional
@@ -23,7 +23,7 @@ public class PublisherService {
     }
 
     public Publisher getPublisherById(Long id) {
-        return publisherRepository.findById(id).orElseThrow(() -> new NoSuchElementException("Publisher does not found!"));
+        return publisherRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException("Publisher does not found!"));
     }
 
     public Publisher savePublisher(Publisher publisher) {
@@ -31,12 +31,7 @@ public class PublisherService {
     }
 
     public void updatePublisherById(Long id, Publisher publisher) {
-        Publisher existPublisher = getPublisherById(id);
-
-        if (existPublisher == null) {
-            throw new NoSuchElementException("User with id" + id + " does not found!");
-        }
-
+        getPublisherById(id);
         publisherRepository.save(publisher);
     }
 

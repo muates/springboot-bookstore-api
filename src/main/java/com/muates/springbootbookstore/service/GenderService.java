@@ -1,12 +1,12 @@
 package com.muates.springbootbookstore.service;
 
 import com.muates.springbootbookstore.domain.Gender;
+import com.muates.springbootbookstore.exception.ResourceNotFoundException;
 import com.muates.springbootbookstore.repository.GenderRepository;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
 import java.util.List;
-import java.util.NoSuchElementException;
 
 @Service
 @Transactional
@@ -23,7 +23,7 @@ public class GenderService {
     }
 
     public Gender getGenderById(Long id) {
-        return genderRepository.findById(id).orElseThrow(() -> new NoSuchElementException("Gender does not found!"));
+        return genderRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException("Gender does not found!"));
     }
 
     public Gender saveGender(Gender gender) {
@@ -31,12 +31,7 @@ public class GenderService {
     }
 
     public void updateGenderById(Long id, Gender gender) {
-        Gender existGender = getGenderById(id);
-
-        if (existGender == null) {
-            throw new NoSuchElementException("User with id" + id + " does not found!");
-        }
-
+        getGenderById(id);
         genderRepository.save(gender);
     }
 

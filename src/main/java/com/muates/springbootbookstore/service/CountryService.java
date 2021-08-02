@@ -1,12 +1,12 @@
 package com.muates.springbootbookstore.service;
 
 import com.muates.springbootbookstore.domain.Country;
+import com.muates.springbootbookstore.exception.ResourceNotFoundException;
 import com.muates.springbootbookstore.repository.CountryRepository;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
 import java.util.List;
-import java.util.NoSuchElementException;
 
 @Service
 @Transactional
@@ -23,7 +23,7 @@ public class CountryService {
     }
 
     public Country getCountryById(Long id) {
-        return countryRepository.findById(id).orElseThrow(() -> new NoSuchElementException("Country does not found!"));
+        return countryRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException("Country does not found!"));
     }
 
     public Country saveCountry(Country country) {
@@ -31,12 +31,7 @@ public class CountryService {
     }
 
     public void updateCountryById(Long id, Country country) {
-        Country existCountry = getCountryById(id);
-
-        if (existCountry == null) {
-            throw new NoSuchElementException("User with id" + id + " does not found!");
-        }
-
+        getCountryById(id);
         countryRepository.save(country);
     }
 
