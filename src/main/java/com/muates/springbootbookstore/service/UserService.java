@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 @Transactional
@@ -40,6 +41,11 @@ public class UserService {
         if (user != null) {
             userRepository.deleteById(id);
         }
+    }
+
+    public List<User> getAllMaleUsers() {
+        List<User> userList = getAllUsers();
+        return userList.stream().filter(user -> user.getGender().getGender().equals("Male")).collect(Collectors.toList());
     }
 
 }

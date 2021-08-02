@@ -45,12 +45,8 @@ public class UserController {
     //TODO - 1
     @GetMapping("/male")
     public ResponseEntity<List<UserResponse>> getUserByMale() {
-        List<User> userList = userService.getAllUsers();
-        List<UserResponse> userResponse = userList.stream()
-                .filter(user -> user.getGender().getGender().equals("Male"))
-                .map(UserConverter::convertToUserResponse)
-                .collect(Collectors.toList());
-        return ResponseEntity.ok(userResponse);
+        List<User> allMaleUsers = userService.getAllMaleUsers();
+        return ResponseEntity.ok(UserConverter.convertAllUsersToUserResponses(allMaleUsers));
     }
 
     //TODO - 2
