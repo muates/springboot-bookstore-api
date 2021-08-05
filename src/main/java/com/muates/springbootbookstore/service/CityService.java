@@ -42,8 +42,9 @@ public class CityService {
 
     public void deleteCityById(Long id) {
         City city = getCityById(id);
-        if (city != null) {
-            cityRepository.deleteById(id);
+        if (city == null) {
+            throw new ResourceNotFoundException("City does not found!");
         }
+        cityRepository.deleteById(id);
     }
 }

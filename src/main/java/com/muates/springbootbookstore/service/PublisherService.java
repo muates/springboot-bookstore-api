@@ -37,8 +37,9 @@ public class PublisherService {
 
     public void deletePublisherById(Long id) {
         Publisher publisher = getPublisherById(id);
-        if (publisher != null) {
-            publisherRepository.deleteById(id);
+        if (publisher == null) {
+            throw new ResourceNotFoundException("Publisher does not found!");
         }
+        publisherRepository.deleteById(id);
     }
 }

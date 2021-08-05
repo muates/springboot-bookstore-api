@@ -41,9 +41,10 @@ public class UserService {
 
     public void deleteUserById(Long id) {
         User user = getUserById(id);
-        if (user != null) {
-            userRepository.deleteById(id);
+        if (user == null) {
+            throw new ResourceNotFoundException("User does not found!");
         }
+        userRepository.deleteById(id);
     }
 
     public List<User> getAllUsersByGender(String gender) {

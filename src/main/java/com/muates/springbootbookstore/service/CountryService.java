@@ -37,8 +37,9 @@ public class CountryService {
 
     public void deleteCountryById(Long id) {
         Country country = getCountryById(id);
-        if (country != null) {
-            countryRepository.deleteById(id);
+        if (country == null) {
+            throw new ResourceNotFoundException("Country does not found!");
         }
+        countryRepository.deleteById(id);
     }
 }

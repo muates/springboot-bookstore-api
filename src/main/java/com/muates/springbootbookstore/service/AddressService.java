@@ -48,8 +48,9 @@ public class AddressService {
 
     public void deleteAddressById(Long id) {
         Address address = getAddressById(id);
-        if (address != null) {
-            addressRepository.deleteById(id);
+        if (address == null) {
+            throw new ResourceNotFoundException("Address does not found!");
         }
+        addressRepository.deleteById(id);
     }
 }

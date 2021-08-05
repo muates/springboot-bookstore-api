@@ -37,8 +37,9 @@ public class AuthorService {
 
     public void deleteAuthorById(Long id) {
         Author author = getAuthorById(id);
-        if (author != null) {
-            authorRepository.deleteById(id);
+        if (author == null) {
+            throw new ResourceNotFoundException("Author does not found!");
         }
+        authorRepository.deleteById(id);
     }
 }

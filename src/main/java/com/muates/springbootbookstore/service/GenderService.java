@@ -37,10 +37,10 @@ public class GenderService {
 
     public void deleteGenderById(Long id) {
         Gender gender = getGenderById(id);
-
-        if (gender != null) {
-            genderRepository.deleteById(id);
+        if (gender == null) {
+            throw new ResourceNotFoundException("Gender does not found!");
         }
+        genderRepository.deleteById(id);
     }
 
     public Gender getGenderByGender(String gender) {
