@@ -36,16 +36,25 @@ public class UserService {
         userRepository.save(user);
     }
 
-    public void deleteUserById(Long id){
+    public void deleteUserById(Long id) {
         User user = getUserById(id);
         if (user != null) {
             userRepository.deleteById(id);
         }
     }
 
-    public List<User> getAllMaleUsers() {
+    public List<User> getAllUsersByGender(String gender) {
+
         List<User> userList = getAllUsers();
-        return userList.stream().filter(user -> user.getGender().getGender().equals("Male")).collect(Collectors.toList());
+
+        if (gender.equals("male")) {
+            return userList.stream().filter(user -> user.getGender().getGender().equals("Male")).collect(Collectors.toList());
+        } else if (gender.equals("female")) {
+            return userList.stream().filter(user -> user.getGender().getGender().equals("Female")).collect(Collectors.toList());
+        }
+
+        return null;
     }
+
 
 }

@@ -10,7 +10,6 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 import java.util.List;
-import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping("/users")
@@ -34,35 +33,11 @@ public class UserController {
         return ResponseEntity.ok(userResponse);
     }
 
-    // TODO - GetMapping - return all male users
-    // TODO - GetMapping - return all female users
-    // TODO - GetMapping - pathVariable
-    // TODO - GetMapping - requestBody
-    // TODO - GetMapping - queryParameter
-
-    //TODO - Start
-
-    //TODO - 1
-    @GetMapping("/male")
-    public ResponseEntity<List<UserResponse>> getUserByMale() {
-        List<User> allMaleUsers = userService.getAllMaleUsers();
-        return ResponseEntity.ok(UserConverter.convertAllUsersToUserResponses(allMaleUsers));
+    @GetMapping("/gender")
+    public ResponseEntity<List<UserResponse>> getAllUsersByGender(@RequestParam(value = "gender", required = false) String gender) {
+        List<User> allUsers = userService.getAllUsersByGender(gender);
+        return ResponseEntity.ok(UserConverter.convertAllUsersToUserResponses(allUsers));
     }
-
-    //TODO - 2
-    @GetMapping("/female")
-    public ResponseEntity<List<UserResponse>> getUserByFemale() {
-        List<User> userList = userService.getAllUsers();
-        List<UserResponse> userResponse = userList.stream()
-                .filter(user -> user.getGender().getGender().equals("Female"))
-                .map(UserConverter::convertToUserResponse)
-                .collect(Collectors.toList());
-        return ResponseEntity.ok(userResponse);
-    }
-    //TODO -3
-
-
-    //TODO " End
 
     @PostMapping({"", "/"})
     public ResponseEntity<UserResponse> saveUser(@Valid @RequestBody UserRequest userRequest) {
