@@ -42,4 +42,8 @@ public class GenderService {
             genderRepository.deleteById(id);
         }
     }
+
+    public Gender getGenderByGender(String gender) {
+        return genderRepository.findByGender(gender).orElseThrow(() -> new ResourceNotFoundException("Gender does not found"));
+    }
 }

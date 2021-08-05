@@ -1,5 +1,6 @@
 package com.muates.springbootbookstore.service;
 
+import com.muates.springbootbookstore.domain.Gender;
 import com.muates.springbootbookstore.domain.User;
 import com.muates.springbootbookstore.exception.ResourceNotFoundException;
 import com.muates.springbootbookstore.repository.UserRepository;
@@ -14,9 +15,11 @@ import java.util.stream.Collectors;
 public class UserService {
 
     private final UserRepository userRepository;
+    private final GenderService genderService;
 
-    public UserService(UserRepository userRepository) {
+    public UserService(UserRepository userRepository, GenderService genderService) {
         this.userRepository = userRepository;
+        this.genderService = genderService;
     }
 
     public List<User> getAllUsers(){
@@ -54,6 +57,11 @@ public class UserService {
         }
 
         return null;
+    }
+
+    public List<User> getAllUserByGenderFromRepo(String gender) {
+        Gender existingGender = genderService.getGenderByGender(gender);
+        return userRepository.findAllByGender(existingGender);
     }
 
 

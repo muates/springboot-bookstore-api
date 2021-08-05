@@ -35,7 +35,7 @@ public class UserController {
 
     @GetMapping("/gender")
     public ResponseEntity<List<UserResponse>> getAllUsersByGender(@RequestParam(value = "gender", required = false) String gender) {
-        List<User> allUsers = userService.getAllUsersByGender(gender);
+        List<User> allUsers = userService.getAllUserByGenderFromRepo(gender);
         return ResponseEntity.ok(UserConverter.convertAllUsersToUserResponses(allUsers));
     }
 
