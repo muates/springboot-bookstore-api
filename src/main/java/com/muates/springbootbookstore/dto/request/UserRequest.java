@@ -1,6 +1,7 @@
 package com.muates.springbootbookstore.dto.request;
 
 import com.muates.springbootbookstore.domain.Gender;
+import com.muates.springbootbookstore.domain.GenderEnum;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -10,6 +11,7 @@ import javax.persistence.Column;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Size;
+import java.util.Date;
 
 @Data
 @NoArgsConstructor
@@ -43,4 +45,6 @@ public class UserRequest {
     private String tcNo;
 
     private Gender gender;
+    private Date birthday;
+    private GenderEnum genderEnum;
 }

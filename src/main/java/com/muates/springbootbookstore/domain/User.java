@@ -6,6 +6,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
+import java.util.Date;
 
 @Entity
 @Table(name = "users")
@@ -25,7 +26,15 @@ public class User {
     private String mail;
     private String tcNo;
 
+    @Temporal(TemporalType.DATE)
+    private Date birthday;
+
     @OneToOne(cascade = {CascadeType.MERGE, CascadeType.DETACH})
     private Gender gender;
 
+    @Enumerated(EnumType.STRING)
+    private GenderEnum genderEnum;
+
 }
+
+
