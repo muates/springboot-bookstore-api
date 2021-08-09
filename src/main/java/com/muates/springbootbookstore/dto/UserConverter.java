@@ -33,7 +33,7 @@ public class UserConverter {
                 .userName(user.getUserName())
                 .gender(user.getGender())
                 .genderEnum(user.getGenderEnum())
-                .age(Math.abs(user.getBirthday().getYear() - new Date().getYear()))
+                .age(new Date().getYear() - user.getBirthday().getYear())
                 .build();
     }
 
