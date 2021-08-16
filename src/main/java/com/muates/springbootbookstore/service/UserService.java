@@ -1,6 +1,5 @@
 package com.muates.springbootbookstore.service;
 
-import com.muates.springbootbookstore.domain.Gender;
 import com.muates.springbootbookstore.domain.User;
 import com.muates.springbootbookstore.exception.ResourceNotFoundException;
 import com.muates.springbootbookstore.repository.UserRepository;
@@ -8,18 +7,15 @@ import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
 import java.util.List;
-import java.util.stream.Collectors;
 
 @Service
 @Transactional
 public class UserService {
 
     private final UserRepository userRepository;
-    private final GenderService genderService;
 
-    public UserService(UserRepository userRepository, GenderService genderService) {
+    public UserService(UserRepository userRepository) {
         this.userRepository = userRepository;
-        this.genderService = genderService;
     }
 
     public List<User> getAllUsers(){
@@ -46,7 +42,7 @@ public class UserService {
         }
         userRepository.deleteById(id);
     }
-
+    /*
     public List<User> getAllUsersByGender(String gender) {
 
         List<User> userList = getAllUsers();
@@ -63,6 +59,6 @@ public class UserService {
     public List<User> getAllUserByGenderFromRepo(String gender) {
         Gender existingGender = genderService.getGenderByGender(gender);
         return userRepository.findAllByGender(existingGender);
-    }
+    }*/
 
 }

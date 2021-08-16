@@ -1,6 +1,5 @@
 package com.muates.springbootbookstore.dto.request;
 
-import com.muates.springbootbookstore.domain.Gender;
 import com.muates.springbootbookstore.domain.GenderEnum;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -44,7 +43,6 @@ public class UserRequest {
     @Column(unique = true)
     private String tcNo;
 
-    private Gender gender;
     private Date birthday;
     private GenderEnum genderEnum;
 }

@@ -32,12 +32,12 @@ public class UserController {
         UserResponse userResponse = UserConverter.convertToUserResponse(userService.getUserById(id));
         return ResponseEntity.ok(userResponse);
     }
-
+    /*
     @GetMapping("/gender")
     public ResponseEntity<List<UserResponse>> getAllUsersByGender(@RequestParam(value = "gender", required = false) String gender) {
         List<User> allUsers = userService.getAllUserByGenderFromRepo(gender);
         return ResponseEntity.ok(UserConverter.convertAllUsersToUserResponses(allUsers));
-    }
+    }*/
 
     @PostMapping({"", "/"})
     public ResponseEntity<UserResponse> saveUser(@Valid @RequestBody UserRequest userRequest) {

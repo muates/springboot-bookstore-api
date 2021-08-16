@@ -29,9 +29,6 @@ public class User {
     @Temporal(TemporalType.DATE)
     private Date birthday;
 
-    @OneToOne(cascade = {CascadeType.MERGE, CascadeType.DETACH})
-    private Gender gender;
-
     @Enumerated(EnumType.STRING)
     private GenderEnum genderEnum;
 

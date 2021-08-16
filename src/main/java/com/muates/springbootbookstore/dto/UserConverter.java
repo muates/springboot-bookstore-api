@@ -19,7 +19,6 @@ public class UserConverter {
                 .userName(userRequest.getUserName())
                 .mail(userRequest.getMail())
                 .tcNo(userRequest.getTcNo())
-                .gender(userRequest.getGender())
                 .birthday(userRequest.getBirthday())
                 .genderEnum(userRequest.getGenderEnum())
                 .build();
@@ -31,7 +30,6 @@ public class UserConverter {
                 .firstName(user.getFirstName())
                 .lastName(user.getLastName())
                 .userName(user.getUserName())
-                .gender(user.getGender())
                 .genderEnum(user.getGenderEnum())
                 .age(new Date().getYear() - user.getBirthday().getYear())
                 .build();
